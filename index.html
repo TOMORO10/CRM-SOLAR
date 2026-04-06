@@ -1450,7 +1450,11 @@
             }
             
             var firstName = getFirstName(nombre);
-            var msg = "Hola " + firstName + ", lo saludamos del programa Colombia Solar. Somos Energy 4.0, implementadores del programa para " + (negocio || "su proyecto") + ".";
+            var bName = (negocio && negocio !== "N/A") ? negocio : "su proyecto";
+            
+            // Mensaje refinado: ~20 palabras
+            var msg = "Hola Sr/Sra " + firstName + ", lo saludamos de Colombia Solar. Somos Energy 4.0 para " + bName + ". Queremos conversar de su factibilidad. ¿Podemos llamarle?";
+            
             return "https://wa.me/" + cleanTel + "?text=" + encodeURIComponent(msg);
         }
 
