@@ -776,14 +776,26 @@
             <button class="modal-close" style="font-size: 1.2rem;" onclick="toggleSidebar()">&times;</button>
         </div>
         <div class="sidebar-menu-list">
-            <div class="sidebar-menu-item" onclick="applyQuickFilter('En seguimiento')">
-                <span>🔄 Beneficiarios en Seguimiento</span>
+            <div class="sidebar-menu-item" onclick="applyQuickFilter('')">
+                <span>⚪ No contactados</span> <span class="badge badge-gray" style="margin-left:auto" id="side-count-nocont">0</span>
             </div>
-            <div class="sidebar-menu-item" onclick="applyQuickFilter('ALL')">
-                <span>📋 Ver Todo (Quitar filtros)</span>
+            <div class="sidebar-menu-item" onclick="applyQuickFilter('Contactado')">
+                <span>🔵 Contactados</span> <span class="badge badge-blue" style="margin-left:auto" id="side-count-cont">0</span>
+            </div>
+            <div class="sidebar-menu-item" onclick="applyQuickFilter('En seguimiento')">
+                <span>🟡 En Seguimiento</span> <span class="badge badge-yellow" style="margin-left:auto" id="side-count-seg">0</span>
+            </div>
+            <div class="sidebar-menu-item" onclick="applyQuickFilter('Contratado')">
+                <span>🟢 Contratados</span> <span class="badge badge-green" style="margin-left:auto" id="side-count-contr">0</span>
+            </div>
+            <div class="sidebar-menu-item" onclick="applyQuickFilter('No interesado')">
+                <span>🔴 No interesados</span> <span class="badge badge-red" style="margin-left:auto" id="side-count-noin">0</span>
+            </div>
+            <div class="sidebar-menu-item" onclick="applyQuickFilter('ALL')" style="margin-top: 1rem; background: var(--surface-1); border-style: dashed;">
+                <span>📋 Ver Todo / Limpiar</span>
             </div>
             <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
-                <p style="font-size: 0.8rem; color: var(--text-muted);">Configuración avanzada próximamente...</p>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">Los números indican el total de beneficiarios en cada etapa.</p>
             </div>
         </div>
     </div>
@@ -888,6 +900,9 @@
             if (!savedData[id]) savedData[id] = {};
             savedData[id][field] = value;
             saveToLocalStorage();
+            
+            // Actualizar KPIs y Sidebar inmediatamente
+            updateGlobalStats();
             
             // Sincronizar modal si esta abierto para este ID
             if (currentModalId === id) {
@@ -1097,6 +1112,19 @@
             document.getElementById("kpi-revision").innerText = sRev;
             document.getElementById("kpi-pendiente").innerText = sPend;
             document.getElementById("kpi-rechazados").innerText = sRech;
+
+            // Stats del Sidebar (Globales sobre D)
+            var sideCounts = { "": 0, "Contactado": 0, "En seguimiento": 0, "Contratado": 0, "No interesado": 0 };
+            for(var k=0; k<D.length; k++) {
+                var cData = getRowData(D[k]);
+                var sVal = cData.seg || "";
+                if (sideCounts.hasOwnProperty(sVal)) sideCounts[sVal]++;
+            }
+            document.getElementById("side-count-nocont").innerText = sideCounts[""];
+            document.getElementById("side-count-cont").innerText = sideCounts["Contactado"];
+            document.getElementById("side-count-seg").innerText = sideCounts["En seguimiento"];
+            document.getElementById("side-count-contr").innerText = sideCounts["Contratado"];
+            document.getElementById("side-count-noin").innerText = sideCounts["No interesado"];
 
             // Stats de los filtrados para la BARRA
             var fMos = filteredData.length;
