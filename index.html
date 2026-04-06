@@ -459,6 +459,36 @@
     </style>
 </head>
 <body>
+    <!-- PASSWORD OVERLAY -->
+    <div id="auth-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h2 style="margin-bottom: 20px; font-weight: 500;">Acceso Restringido - CRM Solar</h2>
+        <input type="password" id="auth-pass" placeholder="Contraseña" style="padding: 10px; width: 250px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--surface-1); color: var(--text-main); margin-bottom: 15px; font-size: 1rem; text-align: center;">
+        <button onclick="checkPass()" class="btn btn-primary" style="padding: 10px 20px; width: 250px;">Ingresar</button>
+        <p id="auth-error" style="color: var(--red); margin-top: 15px; display: none; font-size: 0.9rem;">Contraseña incorrecta</p>
+    </div>
+    <script>
+        function checkPass() {
+            const val = document.getElementById('auth-pass').value;
+            // Contraseña básica de acceso
+            if(val === 'Fenoge2026') {
+                document.getElementById('auth-overlay').style.display = 'none';
+            } else {
+                document.getElementById('auth-error').style.display = 'block';
+            }
+        }
+        
+        // Ejecutar checkPass al presionar Enter
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('auth-pass');
+            if(input) {
+                input.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        checkPass();
+                    }
+                });
+            }
+        });
+    </script>
 
     <!-- STICKY HEADER -->
     <header class="header-sticky">
