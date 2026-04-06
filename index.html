@@ -646,6 +646,11 @@
                         <input type="date" id="modal-fecha_oferta" onchange="updateFromModal('fecha_oferta')">
                     </div>
 
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label>Potencia Instalada / Estimada (Wp)</label>
+                        <input type="text" id="modal-pot" placeholder="Ej: 145" onchange="updateFromModal('pot')">
+                    </div>
+
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; margin-top:1.5rem;">
                         <div class="form-group">
                             <label>Estado de Seguimiento</label>
@@ -762,6 +767,7 @@
                 seg: sd.seg !== undefined ? sd.seg : row.seg,
                 prox: sd.prox !== undefined ? sd.prox : row.prox,
                 notas: sd.notas !== undefined ? sd.notas : row.notas,
+                pot: sd.pot !== undefined ? sd.pot : row.pot,
                 val_comercial: sd.val_comercial !== undefined ? sd.val_comercial : (row.val_comercial || ""),
                 fecha_oferta: sd.fecha_oferta !== undefined ? sd.fecha_oferta : (row.fecha_oferta || "")
             };
@@ -1116,7 +1122,6 @@
             gridHtml += getModalInfoItem("Dirección", c.dir);
             gridHtml += getModalInfoItem("Implementador", c.impl);
             gridHtml += getModalInfoItem("Factura COP", formatCurrency(c.val));
-            gridHtml += getModalInfoItem("Potencia Wp", formatNum(c.pot) + " Wp");
             gridHtml += getModalInfoItem("Estado 2", "<span class=\"badge badge-" + getE2Color(c.e2) + "\">" + c.e2 + "</span>");
             gridHtml += getModalInfoItem("Estado Interno", "<span class=\"badge badge-gray\">" + c.ei + "</span>");
             
@@ -1125,6 +1130,7 @@
             // Set gestión forms
             document.getElementById("modal-val_comercial").value = c.val_comercial;
             document.getElementById("modal-fecha_oferta").value = c.fecha_oferta;
+            document.getElementById("modal-pot").value = c.pot || "";
             document.getElementById("modal-seg").value = c.seg;
             document.getElementById("modal-prox").value = c.prox;
             document.getElementById("modal-notas").value = c.notas;
