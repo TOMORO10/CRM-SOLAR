@@ -35,6 +35,9 @@ try:
             m_col = row.get('MAYOR A $400K', '')
             m400 = (m_col == '1' or val > 400000)
             notas = row.get('Observaciones', '')
+            email = row.get('Email', '')
+            tel_key = next((k for k in row.keys() if k and k.startswith('Tel')), None)
+            telefono = row.get(tel_key, '') if tel_key else ''
             
             obj = {
                 "id": int(id_val) if id_val.isdigit() else id_val,
@@ -51,6 +54,8 @@ try:
                 "val": val,
                 "pot": pot,
                 "m400": m400,
+                "email": email,
+                "tel": telefono,
                 "seg": "",
                 "prox": "",
                 "notas": notas
@@ -79,6 +84,9 @@ except UnicodeDecodeError:
             m_col = row.get('MAYOR A $400K', '')
             m400 = (m_col == '1' or val > 400000)
             notas = row.get('Observaciones', '')
+            email = row.get('Email', '')
+            tel_key = next((k for k in row.keys() if k and k.startswith('Tel')), None)
+            telefono = row.get(tel_key, '') if tel_key else ''
             
             obj = {
                 "id": int(id_val) if id_val.isdigit() else id_val,
@@ -95,6 +103,8 @@ except UnicodeDecodeError:
                 "val": val,
                 "pot": pot,
                 "m400": m400,
+                "email": email,
+                "tel": telefono,
                 "seg": "",
                 "prox": "",
                 "notas": notas
